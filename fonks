@@ -1,0 +1,119 @@
+#include "C:\Users\ataca\CLionProjects\untitled4\main.h"
+void tarifEkle() {
+    struct Tarif yeniTarif;
+
+    printf("\n--- Tarif Ekle ---\n");
+    printf("Tarif Adi: ");
+    scanf("%99s", yeniTarif.isim);  // Taşma sorunlarını önlemek için alan sınırlaması ekledik.
+    printf("Malzemeler: ");
+    scanf("%199s", yeniTarif.malzemeler);
+    printf("Tarif: ");
+    scanf("%499s", yeniTarif.tarif);
+
+    FILE *dosya = fopen(dosyaAdi, "a");
+    if (dosya == NULL) {
+        printf("Dosya acilamadi!\n");
+        return;
+    }
+
+    fprintf(dosya, "%s;%s;%s\n", yeniTarif.isim, yeniTarif.malzemeler, yeniTarif.tarif);
+    fclose(dosya);
+
+    printf("Tarif basariyla eklendi!\n");
+}
+
+void tarifDuzenle() {
+    char arananIsim[100];
+    printf("\n--- Tarif Duzenle ---\n");
+    printf("Duzenlenecek Tarifin Adini Girin: ");
+    scanf("%99s", arananIsim);
+
+    FILE *dosya = fopen(dosyaAdi, "r");
+    if (dosya == NULL) {
+        printf("Dosya acilamadi!\n");
+        return;
+    }
+
+    struct Tarif okunanTarif;
+    FILE *geciciDosya = fopen("C:\\Users\\ataca\\OneDrive\\Masaüstügecici.txt", "w");
+    if (geciciDosya == NULL) {
+        printf("Gecici dosya olusturulamadi!\n");
+        fclose(dosya);
+        return;
+    }
+
+    int bulundu = 0;
+    while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        if (strcmp(arananIsim, okunanTarif.isim) == 0) {
+            bulundu = 1;
+            printf("Yeni Malzemeler: ");
+            scanf("%199s", okunanTarif.malzemeler);
+            printf("Yeni Tarif: ");
+            scanf("%499s", okunanTarif.tarif);
+        }
+        fprintf(geciciDosya, "%s;%s;%s\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif);
+    }
+
+    fclose(dosya);
+    fclose(geciciDosya);
+
+    remove(dosyaAdi);
+    rename("C:\\Users\\ataca\\OneDrive\\Masaüstügecici.txt", dosyaAdi);
+
+    if (!bulundu) {
+        printf("Tarif bulunamadi!\n");
+    } else {
+        printf("Tarif basariyla duzenlendi!\n");
+    }
+}
+
+void tarifAra() {
+    char arananIsim[100];
+    printf("\n--- Tarif Ara ---\n");
+    printf("Aranacak Tarifin Adini Girin: ");
+    scanf("%99s", arananIsim);
+
+    FILE *dosya = fopen(dosyaAdi, "r");
+    if (dosya == NULL) {
+        printf("Dosya acilamadi!\n");
+        return;
+    }
+
+    struct Tarif okunanTarif;
+    int bulundu = 0;
+    while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        if (strcmp(arananIsim, okunanTarif.isim) == 0) {
+            bulundu = 1;
+            printf("Tarif Adi: %s\n", okunanTarif.isim);
+            printf("Malzemeler: %s\n", okunanTarif.malzemeler);
+            printf("Tarif: %s\n", okunanTarif.tarif);
+            break;  // İlk bulduğu tarifi gösterip çıkıyoruz.
+        }
+    }
+
+    fclose(dosya);
+
+    if (!bulundu) {
+        printf("Tarif bulunamadi!\n");
+    }
+}
+
+void tarifleriGoruntule() {
+    printf("\n--- Tarifler ---\n");
+
+    FILE *dosya = fopen(dosyaAdi, "r");
+    if (dosya == NULL) {
+        printf("Dosya acilamadi!\n");
+        return;
+    }
+
+    struct Tarif okunanTarif;
+    while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        printf("Tarif Adi: %s\n", okunanTarif.isim);
+        printf("Malzemeler: %s\n", okunanTarif.malzemeler);
+        printf("Tarif: %s\n", okunanTarif.tarif);
+        printf("------------------------\n");
+    }
+
+    fclose(dosya);
+}

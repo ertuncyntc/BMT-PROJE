@@ -1,0 +1,43 @@
+#include "C:\Users\ataca\CLionProjects\untitled4\main.h"
+#include "C:\Users\ataca\CLionProjects\untitled3\main.c"
+int main() {
+    menuGoster();
+    return 0;
+}
+
+void menuGoster() {
+    int secim;
+
+    do {
+        printf("\n--- Tarif Kitabi Programi ---\n");
+        printf("1. Tarif Ekle\n");
+        printf("2. Tarif Duzenle\n");
+        printf("3. Tarif Ara\n");
+        printf("4. Tarifleri Goruntule\n");
+        printf("0. Cikis\n");
+        printf("Seciminizi yapin: ");
+        scanf("%d", &secim);
+
+        switch (secim) {
+            case 1:
+                tarifEkle();
+                break;
+            case 2:
+                tarifDuzenle();
+                break;
+            case 3:
+                tarifAra();
+                break;
+            case 4:
+                tarifleriGoruntule();
+                break;
+            case 0:
+                printf("Programdan cikiliyor...\n");
+                break;
+            default:
+                printf("Gecersiz secim! Lutfen tekrar deneyin.\n");
+        }
+
+    } while (secim != 0);
+}
+main fonksiyon

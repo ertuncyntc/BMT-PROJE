@@ -1,0 +1,21 @@
+#ifndef TARIF
+#define TARIF
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Tarif {
+    char isim[100];
+    char malzemeler[200];
+    char tarif[500];
+};
+
+const char dosyaAdi[] = "C:\\Users\\ataca\\OneDrive\\Masaüstütarifler.txt";
+
+void menuGoster();
+void tarifEkle();
+void tarifDuzenle();
+void tarifAra();
+void tarifleriGoruntule();
+#endif
+header

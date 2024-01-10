@@ -1,21 +1,22 @@
 #ifndef TARIF
 #define TARIF
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+#include <stdio.h>    // Standart giriş/çıkış kütüphanesi
+#include <stdlib.h>   // Standart kütüphane işlevleri
+#include <string.h>   // Dize işlemleri için kütüphane
 
 struct Tarif {
-    char isim[100];
-    char malzemeler[200];
-    char tarif[500];
+    char isim[100];         // Tarifin adını tutan dizi
+    char malzemeler[200];   // Kullanılan malzemeleri tutan dizi
+    char tarif[500];        // Tarifin detaylarını tutan dizi
 };
 
-const char dosyaAdi[] = "C:\\Users\\ataca\\OneDrive\\Masaüstütarifler.txt";
+const char dosyaAdi[] = "C:\\Users\\ataca\\OneDrive\\Masaüstü\\tarifler.txt";  // Tariflerin kaydedildiği dosyanın yolu
 
-void menuGoster();
-void tarifEkle();
-void tarifDuzenle();
-void tarifAra();
-void tarifleriGoruntule();
+void menuGoster();           // Ana menüyü gösteren fonksiyon bildirimi
+void tarifEkle();           // Tarif eklemek için fonksiyon bildirimi
+void tarifDuzenle();        // Tarif düzenlemek için fonksiyon bildirimi
+void tarifAra();            // Tarif aramak için fonksiyon bildirimi
+void tarifleriGoruntule();  // Tüm tarifleri görüntülemek için fonksiyon bildirimi
+
 #endif
-header

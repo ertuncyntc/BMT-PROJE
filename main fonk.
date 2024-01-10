@@ -1,7 +1,8 @@
-#include "C:\Users\ataca\CLionProjects\untitled4\main.h"
-#include "C:\Users\ataca\CLionProjects\untitled3\main.c"
+#include "C:\Users\ataca\CLionProjects\untitled4\main.h" // Kullanılan başlık dosyası
+#include "C:\Users\ataca\CLionProjects\untitled3\main.c" // Kullanılan kaynak dosyası
+
 int main() {
-    menuGoster();
+    menuGoster(); // Menüyü göstermek için menuGoster fonksiyonunu çağırır
     return 0;
 }
 
@@ -20,24 +21,23 @@ void menuGoster() {
 
         switch (secim) {
             case 1:
-                tarifEkle();
+                tarifEkle(); // Tarif eklemek için tarifEkle fonksiyonunu çağırır
                 break;
             case 2:
-                tarifDuzenle();
+                tarifDuzenle(); // Tarif düzenlemek için tarifDuzenle fonksiyonunu çağırır
                 break;
             case 3:
-                tarifAra();
+                tarifAra(); // Tarif aramak için tarifAra fonksiyonunu çağırır
                 break;
             case 4:
-                tarifleriGoruntule();
+                tarifleriGoruntule(); // Tarifleri görüntülemek için tarifleriGoruntule fonksiyonunu çağırır
                 break;
             case 0:
-                printf("Programdan cikiliyor...\n");
+                printf("Programdan cikiliyor...\n"); // Programdan çıkış mesajı
                 break;
             default:
-                printf("Gecersiz secim! Lutfen tekrar deneyin.\n");
+                printf("Gecersiz secim! Lutfen tekrar deneyin.\n"); // Geçersiz seçim mesajı
         }
 
-    } while (secim != 0);
+    } while (secim != 0); // Kullanıcı çıkışı seçeneğini girene kadar döngü devam eder
 }
-main fonksiyon

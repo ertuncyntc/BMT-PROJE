@@ -1,7 +1,9 @@
-#include "C:\Users\ataca\CLionProjects\untitled4\main.h"
+// Yeni bir tarif eklemek için kullanılan fonksiyon.
 void tarifEkle() {
+    // Yeni tarifin bilgilerini içeren bir yapı (struct) oluşturuluyor.
     struct Tarif yeniTarif;
 
+    // Kullanıcıdan bilgiler alınıyor.
     printf("\n--- Tarif Ekle ---\n");
     printf("Tarif Adi: ");
     scanf("%99s", yeniTarif.isim);  // Taşma sorunlarını önlemek için alan sınırlaması ekledik.
@@ -10,56 +12,77 @@ void tarifEkle() {
     printf("Tarif: ");
     scanf("%499s", yeniTarif.tarif);
 
+    // Dosyayı açma modunda aç
     FILE *dosya = fopen(dosyaAdi, "a");
     if (dosya == NULL) {
+        // Dosya açılamazsa hata mesajı ver ve fonksiyondan çık
         printf("Dosya acilamadi!\n");
         return;
     }
 
+    // Yeni tarifi dosyaya ekleyerek yazdır
     fprintf(dosya, "%s;%s;%s\n", yeniTarif.isim, yeniTarif.malzemeler, yeniTarif.tarif);
+
+    // Dosyayı kapat
     fclose(dosya);
 
+    // Kullanıcıya işlemin başarıyla tamamlandığı bilgisini ver
     printf("Tarif basariyla eklendi!\n");
 }
 
+// Bir tarifi düzenlemek için kullanılan fonksiyon.
 void tarifDuzenle() {
+    // Düzenlenecek tarifin adını içeren bir dizi
     char arananIsim[100];
     printf("\n--- Tarif Duzenle ---\n");
     printf("Duzenlenecek Tarifin Adini Girin: ");
     scanf("%99s", arananIsim);
 
+    // Dosyayı okuma modunda aç
     FILE *dosya = fopen(dosyaAdi, "r");
     if (dosya == NULL) {
+        // Dosya açılamazsa hata mesajı ver ve fonksiyondan çık
         printf("Dosya acilamadi!\n");
         return;
     }
 
+    // Okunan tarifin bilgilerini içeren bir yapı
     struct Tarif okunanTarif;
+    // Geçici dosya oluştur
     FILE *geciciDosya = fopen("C:\\Users\\ataca\\OneDrive\\Masaüstügecici.txt", "w");
     if (geciciDosya == NULL) {
+        // Geçici dosya oluşturulamazsa hata mesajı ver ve dosyaları kapatıp fonksiyondan çık
         printf("Gecici dosya olusturulamadi!\n");
         fclose(dosya);
         return;
     }
 
+    // Bulunduğu tarifi kontrol etmek için bir bayrak değişkeni
     int bulundu = 0;
+    // Dosyadaki her satırı oku
     while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        // Aranan tarifi bul
         if (strcmp(arananIsim, okunanTarif.isim) == 0) {
             bulundu = 1;
+            // Kullanıcıdan yeni malzemeler ve tarifi al
             printf("Yeni Malzemeler: ");
             scanf("%199s", okunanTarif.malzemeler);
             printf("Yeni Tarif: ");
             scanf("%499s", okunanTarif.tarif);
         }
+        // Geçici dosyaya okunan tarifi yaz
         fprintf(geciciDosya, "%s;%s;%s\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif);
     }
 
+    // Dosyaları kapat
     fclose(dosya);
     fclose(geciciDosya);
 
+    // Orjinal dosyayı sil ve geçici dosyayı orjinal dosya adıyla yeniden adlandır
     remove(dosyaAdi);
     rename("C:\\Users\\ataca\\OneDrive\\Masaüstügecici.txt", dosyaAdi);
 
+    // Bulunamadıysa veya bulunduysa kullanıcıya bilgi ver
     if (!bulundu) {
         printf("Tarif bulunamadi!\n");
     } else {
@@ -67,53 +90,70 @@ void tarifDuzenle() {
     }
 }
 
+// Bir tarifi aramak ve görüntülemek için kullanılan fonksiyon
 void tarifAra() {
+    // Aranacak tarifin adını içeren bir dizi
     char arananIsim[100];
     printf("\n--- Tarif Ara ---\n");
     printf("Aranacak Tarifin Adini Girin: ");
     scanf("%99s", arananIsim);
 
+    // Dosyayı okuma modunda aç
     FILE *dosya = fopen(dosyaAdi, "r");
     if (dosya == NULL) {
+        // Dosya açılamazsa hata mesajı ver ve fonksiyondan çık
         printf("Dosya acilamadi!\n");
         return;
     }
 
+    // Okunan tarifin bilgilerini içeren bir yapı
     struct Tarif okunanTarif;
+    // Bulunduğu tarifi kontrol etmek için bir bayrak değişkeni
     int bulundu = 0;
+    // Dosyadaki her satırı oku
     while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        // Aranan tarifi bul
         if (strcmp(arananIsim, okunanTarif.isim) == 0) {
             bulundu = 1;
+            // Tarifi ekrana yazdır ve döngüden çık
             printf("Tarif Adi: %s\n", okunanTarif.isim);
             printf("Malzemeler: %s\n", okunanTarif.malzemeler);
             printf("Tarif: %s\n", okunanTarif.tarif);
-            break;  // İlk bulduğu tarifi gösterip çıkıyoruz.
+            break;
         }
     }
 
+    // Dosyayı kapat
     fclose(dosya);
 
+    // Bulunamadıysa kullanıcıya bilgi ver
     if (!bulundu) {
         printf("Tarif bulunamadi!\n");
     }
 }
 
+// Tüm tarifleri görüntülemek için kullanılan fonksiyon
 void tarifleriGoruntule() {
+    // Dosyayı okuma modunda aç
     printf("\n--- Tarifler ---\n");
-
     FILE *dosya = fopen(dosyaAdi, "r");
     if (dosya == NULL) {
+        // Dosya açılamazsa hata mesajı ver ve fonksiyondan çık
         printf("Dosya acilamadi!\n");
         return;
     }
 
+    // Okunan tarifin bilgilerini içeren bir yapı
     struct Tarif okunanTarif;
+    // Dosyadaki her satırı oku
     while (fscanf(dosya, "%[^;];%[^;];%[^\n]\n", okunanTarif.isim, okunanTarif.malzemeler, okunanTarif.tarif) != EOF) {
+        // Tarifi ekrana yazdır
         printf("Tarif Adi: %s\n", okunanTarif.isim);
         printf("Malzemeler: %s\n", okunanTarif.malzemeler);
         printf("Tarif: %s\n", okunanTarif.tarif);
         printf("------------------------\n");
     }
 
+    // Dosyayı kapat
     fclose(dosya);
 }
